@@ -1,5 +1,7 @@
 package com.anandapp.aiollama.services;
 
+import com.anandapp.aiollama.model.Answer;
+import com.anandapp.aiollama.model.UserQuery;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -14,14 +16,23 @@ public class OllamaServiceImpl implements  OllamaService {
         this.chatModel = chatModel;
     }
 
-
     @Override
-    public String getAnswer(String question) {
-        PromptTemplate promptTemplate = new PromptTemplate(question);
-        Prompt prompt = promptTemplate.create();
+    public Answer getAnswer(UserQuery query){
 
+        PromptTemplate promptTemplate = new PromptTemplate(query.query());
+        Prompt prompt = promptTemplate.create();
         ChatResponse response = chatModel.call(prompt);
 
-        return response.getResult().getOutput().getText();
+        System.out.println("🟧🟧🟧 "+response);
+        return new Answer(response.getResult().getOutput().getText());
     }
+
+//    @Override
+//    public String getAnswer(String userQuery) {
+//        PromptTemplate promptTemplate = new PromptTemplate(userQuery);
+//        Prompt prompt = promptTemplate.create();
+//        ChatResponse response = chatModel.call(prompt);
+//
+//        return response.getResult().getOutput().getText();
+//    }
 }
