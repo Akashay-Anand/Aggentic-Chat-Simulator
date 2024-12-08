@@ -10,15 +10,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OllamaServiceImpl implements  OllamaService {
-    private  final ChatModel chatModel;
 
+    private  final ChatModel chatModel;
     public OllamaServiceImpl(ChatModel chatModel) {
         this.chatModel = chatModel;
     }
 
     @Override
     public Answer getAnswer(UserQuery query){
-
         PromptTemplate promptTemplate = new PromptTemplate(query.query());
         Prompt prompt = promptTemplate.create();
         ChatResponse response = chatModel.call(prompt);

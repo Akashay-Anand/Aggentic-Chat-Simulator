@@ -7,21 +7,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ChatController {
-    // ok test
-    private  final  ChatModel chatModel;
 
+    private  final  ChatModel chatModel;
     public ChatController(ChatModel chatModel) {
         this.chatModel = chatModel;
     }
 
-    @GetMapping("/")
+    // initial api to test llm working
+    @GetMapping("/api/v1/old-qna")
     public  String prompt(@RequestParam String m) {
         System.out.println("query: " + m);
         return  chatModel.call(m);
-    }
-    @GetMapping("/error")
-    public  String errorres(@RequestParam String m) {
-
-        return  "error";
     }
 }

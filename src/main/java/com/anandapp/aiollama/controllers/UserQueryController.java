@@ -16,8 +16,8 @@ public class UserQueryController {
         this.ollamaService = ollamaService;
     }
 
-
-    @PostMapping("/ask")
+//    endpoint for user query
+    @PostMapping("/api/v1/ask")
     public Answer askQuestion(@RequestParam UserQuery query){
         System.out.println("🟧🟧 in controller user query: "+ query);
         return ollamaService.getAnswer(query);
