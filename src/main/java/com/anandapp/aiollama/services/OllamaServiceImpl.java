@@ -22,7 +22,7 @@ public class OllamaServiceImpl implements  OllamaService {
         Prompt prompt = promptTemplate.create();
         ChatResponse response = chatModel.call(prompt);
 
-        System.out.println("🟧🟧🟧 "+response);
+//        System.out.println("🟧🟧🟧 "+response);
         return new Answer(response.getResult().getOutput().getText());
     }
 
