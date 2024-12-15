@@ -25,9 +25,13 @@ public class AgentManager {
             ChatAgent agent = new ChatAgent(agentName, prompts.get(i), ollamaService, logQueue);
             executorService.submit(agent);
         }
-        // Wait for all agents to complete (wait a fixed time or use executorService.awaitTermination)
+        // Wait for all agents to complete (for demo, wait a fixed time or use executorService.awaitTermination)
         executorService.shutdown();
-        executorService.awaitTermination(30, TimeUnit.SECONDS);
+        boolean terminated = executorService.awaitTermination(30, TimeUnit.SECONDS);
+        if (!terminated) {
+            System.out.println("Simulation did not finish in the expected time.");
+        }
+
 
         long simulationEnd = System.currentTimeMillis();
 
