@@ -23,10 +23,20 @@ public class ChatAgent implements Runnable {
         try {
             long startTime = System.currentTimeMillis();
             UserQuery query = new UserQuery(prompt);
-            Answer answer = ollamaService.getAnswer(query);
+            Answer initialAnswer = ollamaService.getAnswer(query);
+            String finalResponse = initialAnswer.answer();
+
+            // Evaluate response (if too long prompt again it... etc) || Dynamic Follow-Up
+//          // each agent can check if its response meets certain quality criteria
+            if (finalResponse.length() > 50) {
+                UserQuery followUpPrompt = new UserQuery("Please provide small answer. it should be under 50 words length for this question: " + prompt);
+                Answer followUpAnswer = ollamaService.getAnswer(followUpPrompt);
+                finalResponse = "\n[Follow-Up]: " + followUpAnswer.answer();
+            }
+
             long endTime = System.currentTimeMillis();
             String logEntry = String.format("%s: Prompt: '%s' | Response: '%s' | Time: %dms",
-                    agentName, prompt, answer.answer(), (endTime - startTime));
+                    agentName, prompt, finalResponse , (endTime - startTime));
             logQueue.put(logEntry);
             System.out.println("✔️✔️" + prompt + ": "+ logEntry);
         } catch (Exception e) {
