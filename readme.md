@@ -51,4 +51,5 @@
 
 > Aggentic Chat Simulator.
 > cc **Akashay Anand**
+> || 📧 akashayanand1@gmail.com
 
